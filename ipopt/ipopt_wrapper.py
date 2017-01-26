@@ -1,6 +1,5 @@
 from __future__ import absolute_import, unicode_literals
 import sys
-from builtins import bytes
 import numpy as np
 try:
     from scipy.optimize import OptimizeResult
@@ -12,6 +11,12 @@ except ImportError:
 import cyipopt
 
 from scipy.optimize import approx_fprime
+
+if sys.version_info[0] < 3:
+    import __builtin__ as builtins
+else:
+    import builtins
+bytes = builtins.bytes
 
 class IpoptProblemWrapper(object):
     def __init__(self, fun, args=(), kwargs=None, jac=None, hess=None, hessp=None,
